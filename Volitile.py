@@ -1,5 +1,8 @@
 import requests
 import numpy as np
+from bs4 import BeautifulSoup
+import simplejson
+from soup2dict import convert
 
 
 # appid numbers
@@ -10,11 +13,11 @@ armello = "290340"
 
 # url = 'https://steamcommunity.com/market/search?appid=' +csgo
 
+login = 0
 
-def get_data():
-    cookie = {
-        "steamLoginSecure": "76561199003829124%7C%7CeyAidHlwIjogIkpXVCIsICJhbGciOiAiRWREU0EiIH0.eyAiaXNzIjogInI6MEQxOV8yMzIyQUY3OV85MEFFNiIsICJzdWIiOiAiNzY1NjExOTkwMDM4MjkxMjQiLCAiYXVkIjogWyAid2ViIiBdLCAiZXhwIjogMTY5NDYwNDE0NywgIm5iZiI6IDE2ODU4NzYwMjksICJpYXQiOiAxNjk0NTE2MDI5LCAianRpIjogIjBEMjlfMjMyMkFGQUFfNEQ3MjUiLCAib2F0IjogMTY5NDQyNTA5MiwgInJ0X2V4cCI6IDE3MTI4MDA0NDAsICJwZXIiOiAwLCAiaXBfc3ViamVjdCI6ICIzMS45NC41LjEzOSIsICJpcF9jb25maXJtZXIiOiAiMzEuOTQuNS4xMzkiIH0.Fk-9Fz5aBQ34GiEU5rDdlORWIp7hVhd8oQPL0bhEAdVZQyFZqlvmL_2GhxtllJUPns8nojB469kAHwj_ks7lDw",
-    }
+
+def get_data(securelogin):
+    cookie = {"steamLoginSecure": securelogin}
 
     url = "http://steamcommunity.com/market/pricehistory/?appid=730&market_hash_name=Glove%20Case%20Key"
 
@@ -55,14 +58,41 @@ def volatility_calc(data):
     return percent_change
 
 
-def compare():
-    pass
+def list_names():
+    # Creates a new json File (or updates)
+    url = "https://counterstrike.fandom.com/wiki/Skins/List"
+    response = requests.get(url).text
+    soup = BeautifulSoup(response, "html.parser")
+
+    rows = soup.find_all(
+        class_=[
+            "common",
+            "uncommon",
+            "rare",
+            "mythical",
+            "legendary",
+            "ancient",
+            "discontinued",
+        ]
+    )
+    dict_result = convert(rows)
+    with open("output.json", "w") as output_file:
+        output_file.write(
+            simplejson.dumps(dict_result, indent=2),
+        )
 
 
-response = get_data()
-data = filter(response)
-volatility = volatility_calc(data)
-print(volatility)
+def compare(response):
+    data = filter(response)
+    # ---------------------------------working on this
+
+
+# response = get_data(login)
+# data = filter(response)
+# volatility = volatility_calc(data)
+# print(volatility)
 
 
 # print(volatility_calc(data))
+
+list_names()
