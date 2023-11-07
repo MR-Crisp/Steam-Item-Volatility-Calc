@@ -3,6 +3,7 @@ import numpy as np
 from bs4 import BeautifulSoup
 import simplejson
 from soup2dict import convert
+import json
 
 
 # appid numbers
@@ -65,6 +66,7 @@ def list_names():
     soup = BeautifulSoup(response, "html.parser")
 
     rows = soup.find_all(
+        "span",
         class_=[
             "common",
             "uncommon",
@@ -73,13 +75,20 @@ def list_names():
             "legendary",
             "ancient",
             "discontinued",
-        ]
+        ],
     )
+
     dict_result = convert(rows)
-    with open("output.json", "w") as output_file:
-        output_file.write(
-            simplejson.dumps(dict_result, indent=2),
-        )
+    print(dict_result.keys())
+    # with open("output.json", "w") as output_file:
+    #     output_file.write(
+    #         simplejson.dumps(dict_result, indent=2),
+    #      )
+
+
+def read_json():
+    with open("./output.json") as f:
+        data = json.load(f)
 
 
 def compare(response):
@@ -94,5 +103,6 @@ def compare(response):
 
 
 # print(volatility_calc(data))
+
 
 list_names()

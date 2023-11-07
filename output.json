@@ -1,6 +1,5 @@
-{
-  "span": [
-    {
+
+    [{
       "@class": [
         "common"
       ],
@@ -20657,7 +20656,4 @@
       "#text": "Covert",
       "navigablestring": [
         "Covert"
-      ]
-    }
-  ]
-}
+      ]}]
