@@ -32,7 +32,7 @@ def get_data(securelogin):
 def filter(response):
     index = response.text.find("[")
 
-    data = response.text[index + 1 : -2]
+    data = response.text[index + 1: -2]
 
     data = data.split("],[")
     data[-1] = data[-1][0:-1]
@@ -51,7 +51,8 @@ def volatility_calc(data):
 
     mean = sum(price_list) / len(price_list)
 
-    variance = sum([((price - mean) ** 2) for price in price_list]) / len(price_list)
+    variance = sum([((price - mean) ** 2)
+                   for price in price_list]) / len(price_list)
 
     std = variance**0.5
 
@@ -78,17 +79,33 @@ def list_names():  # creates a list of names or updates it if it already exists
         ],
     )
 
-    with open("output.txt", "w") as output_file:
-        for i, row in enumerate(rows):
-            if i == (len(rows) - 1):
-                output_file.write(row.text)
-
-            elif i % 2 == 0:
-                output_file.write(row.text)
-                output_file.write("{")
-            else:
+    with open("output.txt", "w", encoding='utf8') as output_file:
+        for i, row in enumerate(rows[0:-1], 0):
+            if i % 2 == 0:
                 output_file.write(row.text)
                 output_file.write("|")
+            else:
+                output_file.write(row.text)
+                output_file.write("\n")
+
+    # one issue found with the write method, is that the website has formatted its data incorrectly, meaning that the grades sometimes come before, but sometimes after
+    # so this next piece of code is to fix that
+
+    with open("output.txt", "r+", encoding='utf8') as output_file:
+        lines = output_file.readlines()
+        for line in lines:
+            line = line.strip()
+            line = line.split("|")
+            GRADES = ["Industrial Grade", "Mil-Spec", "Classified",
+          "Restricted", "Consumer Grade", "Covert"]
+            for i in range(len(GRADES)):
+                if line[0] == GRADES[i]:
+                    # switches the two items
+                    line[0], line[1] = line[1], line[0]
+            output_file.write(line[0])
+            output_file.write("|")
+            output_file.write(line[1])
+            output_file.write("\n")
 
 
 def read_names():  # reads the names from output.txt
@@ -113,4 +130,4 @@ def compare(response):
 # print(volatility_calc(data))
 
 
-read_names()
+test.txt
