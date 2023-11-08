@@ -60,8 +60,7 @@ def volatility_calc(data):
     return percent_change
 
 
-def list_names():
-    # Creates a new json File (or updates)
+def list_names():  # creates a list of names or updates it if it already exists
     url = "https://counterstrike.fandom.com/wiki/Skins/List"
     response = requests.get(url).text
     soup = BeautifulSoup(response, "html.parser")
@@ -80,14 +79,24 @@ def list_names():
     )
 
     with open("output.txt", "w") as output_file:
-        for row in rows:
-            output_file.write(row.text)
-            output_file.write(",")
+        for i, row in enumerate(rows):
+            if i == (len(rows) - 1):
+                output_file.write(row.text)
+
+            elif i % 2 == 0:
+                output_file.write(row.text)
+                output_file.write("{")
+            else:
+                output_file.write(row.text)
+                output_file.write("|")
 
 
-def read_json():
-    with open("./output.json") as f:
-        data = json.load(f)
+def read_names():  # reads the names from output.txt
+    with open("./output.txt", "r") as f:
+        for line in f:
+            line = line.split("|")
+            line = line[0:-2]
+            print(line)
 
 
 def compare(response):
@@ -104,4 +113,4 @@ def compare(response):
 # print(volatility_calc(data))
 
 
-list_names()
+read_names()
