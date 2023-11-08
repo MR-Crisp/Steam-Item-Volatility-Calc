@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 import simplejson
 from soup2dict import convert
 import json
+import ast
 
 
 # appid numbers
@@ -78,12 +79,10 @@ def list_names():
         ],
     )
 
-    dict_result = convert(rows)
-    print(dict_result.keys())
-    # with open("output.json", "w") as output_file:
-    #     output_file.write(
-    #         simplejson.dumps(dict_result, indent=2),
-    #      )
+    with open("output.txt", "w") as output_file:
+        for row in rows:
+            output_file.write(row.text)
+            output_file.write(",")
 
 
 def read_json():
