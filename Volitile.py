@@ -5,6 +5,7 @@ import simplejson
 from soup2dict import convert
 import json
 import ast
+from thefuzz import fuzz
 
 
 # appid numbers
@@ -27,20 +28,6 @@ def get_data(securelogin):
 
     print(response)
     return response
-
-
-def filter(response):
-    index = response.text.find("[")
-
-    data = response.text[index + 1 : -2]
-
-    data = data.split("],[")
-    data[-1] = data[-1][0:-1]
-
-    for i in range(len(data)):
-        data[i] = data[i].split(",")
-
-    return data
 
 
 def volatility_calc(data):
@@ -115,17 +102,25 @@ def list_names():  # creates a list of names or updates it if it already exists
         output_file.writelines([f"{x[0]}|{x[1]}\n" for x in rearanged])
 
 
-def read_names():  # reads the names from output.txt
-    with open("./output.txt", "r") as f:
-        for line in f:
-            line = line.split("|")
-            line = line[0:-2]
-            print(line)
+def read_names(itemNameInput):  # reads the names from output.txt
+    biggestratio = 0
+    closestItem = ""
+    with open("./output.txt", "r", encoding="utf8") as output_file:
+        lines = output_file.readlines()
+        for line in lines:
+            item = line.strip()
+            item = item.split("|")
+            item = item[0]
 
-
-def compare(response):
-    data = filter(response)
-    # ---------------------------------working on this
+            # tries to find the closet match from the names
+            tempratio = fuzz.ratio(item, itemNameInput)
+            if tempratio > biggestratio:
+                biggestratio = tempratio
+                closestItem = item
+    if biggestratio <= 50:
+        return ""
+    else:
+        return closestItem
 
 
 # response = get_data(login)
@@ -135,6 +130,4 @@ def compare(response):
 
 
 # print(volatility_calc(data))
-
-
-list_names()
+print(read_names("dragobob loreee"))
