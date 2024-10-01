@@ -16,17 +16,17 @@ armello = "290340"
 
 # url = 'https://steamcommunity.com/market/search?appid=' +csgo
 
-login = 0
+login = "76561199003829124%7C%7CeyAidHlwIjogIkpXVCIsICJhbGciOiAiRWREU0EiIH0.eyAiaXNzIjogInI6MTBCMV8yNTFDREVCM183MjZERSIsICJzdWIiOiAiNzY1NjExOTkwMDM4MjkxMjQiLCAiYXVkIjogWyAid2ViOmNvbW11bml0eSIgXSwgImV4cCI6IDE3Mjc4NjU2MjMsICJuYmYiOiAxNzE5MTM4NTc1LCAiaWF0IjogMTcyNzc3ODU3NSwgImp0aSI6ICIxMEE3XzI1MUNERUIzXzg4RTIxIiwgIm9hdCI6IDE3Mjc3Nzg1NzQsICJydF9leHAiOiAxNzQ1OTg0MTU4LCAicGVyIjogMCwgImlwX3N1YmplY3QiOiAiMTM4LjM3LjI1NC4zOCIsICJpcF9jb25maXJtZXIiOiAiMTM4LjM3LjI1NS43MiIgfQ.Zz_kkx1P9VhDXXhQPQ1h6umsnMyi3yljvQmGBWW5-4ERRwLslAh4cpNlXmZuG5NSkA2PiSGmux_L2wN1Kr6NDA"
 
 
 def get_data(securelogin):
-    cookie = {"steamLoginSecure": securelogin}
+    cookie = {"sessionid":"215bed47df928bf797b3ab1b"}
 
     url = "http://steamcommunity.com/market/pricehistory/?appid=730&market_hash_name=Glove%20Case%20Key"
 
     response = requests.get(url, cookies=cookie)
 
-    print(response)
+    print(response.json)
     return response
 
 
@@ -123,11 +123,11 @@ def read_names(itemNameInput):  # reads the names from output.txt
         return closestItem
 
 
-# response = get_data(login)
-# data = filter(response)
-# volatility = volatility_calc(data)
-# print(volatility)
+response = get_data(login)
+data = filter(response)
+volatility = volatility_calc(data)
+print(volatility)
 
 
 # print(volatility_calc(data))
-print(read_names("dragobob loreee"))
+#print(read_names("dragobob loreee"))
