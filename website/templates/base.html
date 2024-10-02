@@ -1,0 +1,19 @@
+<!-- this html file will be used as the main 'theme' of the total website -->
+<!-- other html documents will be an extension of this base html file, with slight alterations to fit said functionality -->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- meta data will be placed here relative to the website -->
+         <meta charset="utf-8"/>
+         <meta name="viewport" content="width=device-width, initial-scale=1"/>
+         <title>Document</title>
+         <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-5.3.3-dist/css/bootstrap.css') }}">
+    </head>
+    <body>
+        <!-- Has the actual html data for the website -->
+         <h1>Hello bootstrap!</h1>
+         <script src="{{ url_for('static', filename='bootstrap-5.3.3-dist/js/bootstrap.bundle.js') }}"></script>
+    </body>
+    </body>
+</html>
