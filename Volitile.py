@@ -20,7 +20,7 @@ login = "76561199003829124%7C%7CeyAidHlwIjogIkpXVCIsICJhbGciOiAiRWREU0EiIH0.eyAi
 
 
 def get_data(securelogin):
-    cookie = {"sessionid":"215bed47df928bf797b3ab1b"}
+    cookie = {"steamLoginSecure": securelogin,"sessionid":"215bed47df928bf797b3ab1b"}
 
     url = "http://steamcommunity.com/market/pricehistory/?appid=730&market_hash_name=Glove%20Case%20Key"
 
