@@ -1,4 +1,10 @@
 <!-- ROADMAP -->
+# Steam Item Volatility Calculator
+
+## Overview
+The aim of this project is to calculate the volatility of items on Steam
+
+
 ## Roadmap
 
 - [ ] Add Front end
