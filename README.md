@@ -1,3 +1,13 @@
+#### Contributors
+- MR-CRISP
+- Alejandro
+
+#### How to use/setup
+
+first make a fork 
+
+
+
 # Volatility Checker
 Stuff to add:
 - Front end.
