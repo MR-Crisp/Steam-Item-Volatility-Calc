@@ -54,15 +54,12 @@ class data_scrapper:
         return hex_colour
 
     def eval_volatility(self,volatility):
-        max_value = 5
-        normalized_value = min(max(volatility / max_value, 0), 1)
-        # Interpolate from green to red
+        MAX_VALUE = 5
+        normalized_value = min(max(volatility / MAX_VALUE, 0), 1)
         red = int(normalized_value * 255)
         green = int((1 - normalized_value) * 255)
-
-        # Return the color in hex format
-        print(f"#{red:02X}{green:02X}00")
-
+        hex_colour = f"#{red:02X}{green:02X}00"
+        retrun hex_colour
 
 def main():
     scraper = data_scrapper()
