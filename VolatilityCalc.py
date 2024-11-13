@@ -2,14 +2,12 @@ import json
 import numpy as np
 import requests
 
-url ="https://steamcommunity.com/market/pricehistory/?appid=730&market_hash_name=Glove%20Case%20Key"
-
+url ="https://steamcommunity.com/market/pricehistory/?appid=730&market_hash_name=Danger%20Zone%20Case"
 
 class data_scrapper:
 
     def __init__(self):
         return
-
 
     def json_filter(self,response_text):
         try:
@@ -23,21 +21,47 @@ class data_scrapper:
 
         return prices_list
 
-
     def get_data(self, securelogin, id,url):
         cookie = {"steamLoginSecure": securelogin, "sessionid": id}
         response = requests.get(url, cookies=cookie)
 
         return response
 
-
     def volatility_calc(self,data):
         return_calc = (np.diff(data)/data[:-1])
         volatility = np.std(return_calc)*100
-        # Round the volatility to 3 decimal places
-        volatility = round(volatility, 3)
+        volatility = round(volatility, 3)# Round the volatility to 3 decimal places
 
         return volatility
+
+    def calculate_sharpe_ratio(self, data, risk_free_rate):
+        daily_returns = np.diff(data) / data[:-1]# Calculate daily returns
+        mean_returns = np.mean(daily_returns-risk_free_rate)
+        std_returns = np.std(daily_returns-risk_free_rate)
+        sharpe_ratio = (mean_returns/std_returns)# Calculate Sharpe Ratio
+        sharpe_ratio = round(sharpe_ratio, 3)
+
+        return sharpe_ratio
+
+    def eval_sharpe_ratio(self,sharpe_ratio):
+        MIN_SHARPE_RATIO = -1.0  #red
+        MAX_SHARPE_RATIO = 2.0  #green
+        normalised_sharpe = max(min(sharpe_ratio, MAX_SHARPE_RATIO), MIN_SHARPE_RATIO) # Clamp the Sharpe Ratio to the min/max boundaries
+        normalised_sharpe = (normalised_sharpe - MIN_SHARPE_RATIO) / (MAX_SHARPE_RATIO - MIN_SHARPE_RATIO)
+        red = int((1 - normalised_sharpe) * 255)  # More red for negative values
+        green = int(normalised_sharpe * 255)  # More green for positive values
+        hex_colour = f'#{red:02x}{green:02x}00'
+        return hex_colour
+
+    def eval_volatility(self,volatility):
+        max_value = 5
+        normalized_value = min(max(volatility / max_value, 0), 1)
+        # Interpolate from green to red
+        red = int(normalized_value * 255)
+        green = int((1 - normalized_value) * 255)
+
+        # Return the color in hex format
+        print(f"#{red:02X}{green:02X}00")
 
 
 def main():
@@ -47,12 +71,16 @@ def main():
     response = scraper.get_data(steamLoginSecure, sessionid,url)
     response_text = response.text
     prices = scraper.json_filter(response_text)
+
     if prices == None:
-        return
+         return
     volatility = scraper.volatility_calc(prices)
     print(volatility)
-    return
+    # ratio = scraper.calculate_sharpe_ratio(prices,0.02/365)
+    # col = scraper.eval_sharpe_ratio(ratio)
+    scraper.eval_volatility(volatility)
 
+    return
 
 if __name__ == "__main__":
     main()
