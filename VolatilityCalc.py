@@ -59,26 +59,20 @@ class data_scrapper:
         red = int(normalized_value * 255)
         green = int((1 - normalized_value) * 255)
         hex_colour = f"#{red:02X}{green:02X}00"
-        retrun hex_colour
+        return hex_colour
 
-def main():
+if __name__ == "__main__":
     scraper = data_scrapper()
     steamLoginSecure = input("Please enter your SteamLoginSecure")
     sessionid = input("Please enter your sessionid")
     response = scraper.get_data(steamLoginSecure, sessionid,url)
     response_text = response.text
     prices = scraper.json_filter(response_text)
-
-    if prices == None:
-         return
     volatility = scraper.volatility_calc(prices)
     print(volatility)
-    # ratio = scraper.calculate_sharpe_ratio(prices,0.02/365)
+    ratio = scraper.calculate_sharpe_ratio(prices,0.02/365)
     # col = scraper.eval_sharpe_ratio(ratio)
     scraper.eval_volatility(volatility)
 
-    return
 
-if __name__ == "__main__":
-    main()
 

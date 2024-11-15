@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Form</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <form action="/process-input" method="post">
+        <label for="input1">Enter first value:</label>
+        <input type="text" id="input1" name="input1" required>
+
+        <label for="input2">Enter second value:</label>
+        <input type="text" id="input2" name="input2" required>
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+</body>
+</html>
