@@ -1,8 +1,11 @@
 from flask import Flask, request, render_template,session
 from VolatilityCalc import data_scrapper
+import json
 app = Flask(__name__)
-
-app.secret_key = '94c03d7e4a0af14133954975a141ad170cf648bc825b2ca6f0b170b405e4e393'
+with open('./keys.json', 'r') as file:
+    data = json.load(file)
+    key = data.get("app")
+app.secret_key = key
 @app.route('/')
 def home():
     return render_template('HomePage.html')
@@ -23,8 +26,9 @@ def submit():
 
 @app.route('/get_data')
 def get_data():
-    input1 = request.form['input1']
-    input2 = request.form['input2']
+    game = request.form['input1']
+    item = request.form['input2']
+    session['url'] = data_scrapper.url_builder(game,item)
     # Process the inputs as needed
     return f'You entered: {input1} and {input2}'
 

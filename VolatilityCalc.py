@@ -61,18 +61,28 @@ class data_scrapper:
         hex_colour = f"#{red:02X}{green:02X}00"
         return hex_colour
 
+    def url_builder(self, appid,item):
+        item = item.replace(r' ', '%20')
+        url = f"https://steamcommunity.com/market/pricehistory/?{appid}=730&market_hash_name={item}"
+        return url
+
+
+
+
 if __name__ == "__main__":
-    scraper = data_scrapper()
-    steamLoginSecure = input("Please enter your SteamLoginSecure")
-    sessionid = input("Please enter your sessionid")
-    response = scraper.get_data(steamLoginSecure, sessionid,url)
-    response_text = response.text
-    prices = scraper.json_filter(response_text)
-    volatility = scraper.volatility_calc(prices)
-    print(volatility)
-    ratio = scraper.calculate_sharpe_ratio(prices,0.02/365)
+    # scraper = data_scrapper()
+    # steamLoginSecure = input("Please enter your SteamLoginSecure")
+    # sessionid = input("Please enter your sessionid")
+    # response = scraper.get_data(steamLoginSecure, sessionid,url)
+    # response_text = response.text
+    # prices = scraper.json_filter(response_text)
+    # volatility = scraper.volatility_calc(prices)
+    # print(volatility)
+    # ratio = scraper.calculate_sharpe_ratio(prices,0.02/365)
     # col = scraper.eval_sharpe_ratio(ratio)
-    scraper.eval_volatility(volatility)
-
-
+    # scraper.eval_volatility(volatility)
+    scraper = data_scrapper()
+    l = scraper.url_builder("730","Danger Zone Case")
+    print(l)
+test = url ="https://steamcommunity.com/market/pricehistory/?appid=730&market_hash_name=Danger%20Zone%20Case"
 
