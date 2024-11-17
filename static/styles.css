@@ -117,3 +117,36 @@ strong {
     background-color: lightslategrey;
     padding: 10px;
 }
+
+/* Styles for presentData.html */
+.container {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 500px;
+    margin: auto;
+}
+
+.message {
+    font-size: 1.5em;
+    color: #00796b;
+    margin-bottom: 20px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 15px 30px;
+    font-size: 1.5em;
+    color: #ffffff;
+    background-color: black;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: grey;
+}

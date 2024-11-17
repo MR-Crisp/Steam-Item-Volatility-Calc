@@ -24,13 +24,35 @@ def submit():
 
     return render_template('LoginSuccess.html')
 
-@app.route('/get_data')
+@app.route('/GetData')
 def get_data():
-    game = request.form['input1']
-    item = request.form['input2']
-    session['url'] = data_scrapper.url_builder(game,item)
+    return render_template('GetData.html')
+
+
+@app.route('/process-input',methods = ['POST'])
+def process_input():
+    scrapper = data_scrapper()
+    game = request.form['game']
+    item = request.form['item']
+    session['url'] = scrapper.url_builder(game,item)
     # Process the inputs as needed
-    return f'You entered: {input1} and {input2}'
+    print(game,item)
+    return render_template('GetDataSuccessful.html')
+
+@app.route('/presentData')
+def presentData():
+    scraper = data_scrapper()
+    steamLoginSecure = session['steamLoginSecure']
+    sessionid = session['sessionid']
+    url = session['url']
+    response = scraper.get_data(steamLoginSecure, sessionid,url)
+    response_text = response.text
+    prices = scraper.json_filter(response_text)
+    volatility1 = scraper.volatility_calc(prices)
+    ratio1 = scraper.calculate_sharpe_ratio(prices,0.02/365)
+    colour_volatility1 = scraper.eval_volatility(volatility1)
+    colour_ratio1 = scraper.eval_sharpe_ratio(ratio1)
+    return render_template('presentData.html',volatility = volatility1,ratio = ratio1,colour_volatility = colour_volatility1,colour_ratio = colour_ratio1)
 
 
 if __name__ == '__main__':
