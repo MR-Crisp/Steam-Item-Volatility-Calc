@@ -20,7 +20,6 @@ class data_scrapper:
         prices_list = [item[1] for item in general_list]# Extract the second element (price) from each sub-list in 'prices'
 
         return prices_list
-
     def get_data(self, securelogin, id,url):
         cookie = {"steamLoginSecure": securelogin, "sessionid": id}
         response = requests.get(url, cookies=cookie)
@@ -59,26 +58,11 @@ class data_scrapper:
         red = int(normalized_value * 255)
         green = int((1 - normalized_value) * 255)
         hex_colour = f"#{red:02X}{green:02X}00"
-        retrun hex_colour
+        return hex_colour
 
-def main():
-    scraper = data_scrapper()
-    steamLoginSecure = input("Please enter your SteamLoginSecure")
-    sessionid = input("Please enter your sessionid")
-    response = scraper.get_data(steamLoginSecure, sessionid,url)
-    response_text = response.text
-    prices = scraper.json_filter(response_text)
+    def url_builder(self, appid,item):
+        item = item.replace(r' ', '%20')
+        url = f"https://steamcommunity.com/market/pricehistory/?appid={appid}&market_hash_name={item}"
+        return url
 
-    if prices == None:
-         return
-    volatility = scraper.volatility_calc(prices)
-    print(volatility)
-    # ratio = scraper.calculate_sharpe_ratio(prices,0.02/365)
-    # col = scraper.eval_sharpe_ratio(ratio)
-    scraper.eval_volatility(volatility)
-
-    return
-
-if __name__ == "__main__":
-    main()
 

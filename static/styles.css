@@ -1,0 +1,152 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e0f7fa;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Welcome Container */
+.welcome-container {
+    text-align: center;
+}
+
+.welcome-container h1 {
+    color: black;
+    margin-bottom: 20px;
+}
+
+/* Wavy Button */
+.wavy-button {
+    display: inline-block;
+    padding: 15px 30px;
+    font-size: 1.5em;
+    color: #ffffff;
+    background-color: black;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.wavy-button:before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 300%;
+    height: 300%;
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translate(-50%, -50%) rotate(45deg);
+    transition: width 0.3s ease, height 0.3s ease;
+    border-radius: 50%;
+}
+
+.wavy-button:hover {
+    background-color: grey;
+}
+
+.wavy-button:hover:before {
+    width: 0;
+    height: 0;
+}
+
+form {
+    max-width: 500px;
+    width: 100%;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: black;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+input[type="text"], input[type="submit"] {
+    width: 100%;
+    padding: 15px;
+    font-size: 1em;
+    margin-bottom: 10px;
+    border: 2px solid lightslategrey;
+    border-radius: 4px;
+}
+
+input[type="submit"] {
+    background: lightslategray;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background: darkgrey;
+}
+
+/* Submitted Data Page */
+p {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+
+strong {
+    color: #00796b;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.volatility{
+    border-style: dot-dash;
+    background-color: lightslategrey;
+    padding: 10px;
+}
+
+/* Styles for presentData.html */
+.container {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 500px;
+    margin: auto;
+}
+
+.message {
+    font-size: 1.5em;
+    color: #00796b;
+    margin-bottom: 20px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 15px 30px;
+    font-size: 1.5em;
+    color: #ffffff;
+    background-color: black;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: grey;
+}

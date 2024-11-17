@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Form</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <form action="/process-input" method="post">
+        <label for="game">Enter the three digit ID for the game:</label>
+        <input type="text" id="game" name="game" required>
+
+        <label for="item">Enter the name of the item:</label>
+        <input type="text" id="item" name="item" required>
+
+        <button type="submit" class = "wavy-button">Submit</button>
+    </form>
+</div>
+
+</body>
+</html>

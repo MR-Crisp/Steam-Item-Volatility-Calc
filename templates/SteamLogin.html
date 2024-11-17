@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+<head>
+    <title>Submit Steam Credentials</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Enter your Steam Credentials</h1>
+    <form action="/submit" method="post">
+        <label for="steam_secure_login">Steam Secure Login:</label>
+        <input type="text" id="steam_secure_login" name="steam_secure_login">
+        <label for="session_id">Session ID:</label>
+        <input type="text" id="session_id" name="session_id">
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
